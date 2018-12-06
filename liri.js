@@ -22,15 +22,16 @@ if (process.argv[2] === 'spotify-this-song') {
         console.log(data);
     });
 }
-if (process.argv[2] === 'concert-this'){
-   request(`https://rest.bandsintown.com/artists/${process.argv[3]}/events?app_id=codingbootcamp`, (error, response, body) =>{
-    if (!error && response.statusCode === 200) {
-    
-        const venueName = JSON.parse(body).venue.name;
-        const venueCity = JSON.parse(body).venue.city;
-    
-        console.log(`Latest price for ${venueName} is: ${venueCity}`);
-      }
+if (process.argv[2] === 'concert-this') {
+    request(`https://rest.bandsintown.com/artists/${process.argv[3]}/events?app_id=codingbootcamp`, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
 
-   });
+            let response = JSON.parse(body);
+            for (let i = 0; i < response.length; i++) {
+                console.log(`Venue name: ${response[i].venue.name}`);
+                console.log(`Venue city: ${response[i].venue.city}`);
+            }
+        }
+
+    });
 }
