@@ -24,22 +24,22 @@ function getSpotifySong(secondParam) {
             console.log(`Album: ${body.album.name}`);
         });
     }
-        if (secondParam) {
-            spotify.search({ type: 'track', query: secondParam }, function (err, data) {
-                let artists = '';
-                if (err) {
-                    return console.log('Error occurred: ' + err);
-                }
-    
-                body = data.tracks.items[0];
-                body.artists.forEach(artist => {
-                    artists += artist.name;
-                });
-                console.log(`Artist(s): ${artists}`);
-                console.log(`Song Name: ${body.name}`);
-                console.log(`Preview Link: ${body.external_urls.spotify}`);
-                console.log(`Album: ${body.album.name}`);
+    if (secondParam) {
+        spotify.search({ type: 'track', query: secondParam }, function (err, data) {
+            let artists = '';
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+
+            body = data.tracks.items[0];
+            body.artists.forEach(artist => {
+                artists += artist.name;
             });
+            console.log(`Artist(s): ${artists}`);
+            console.log(`Song Name: ${body.name}`);
+            console.log(`Preview Link: ${body.external_urls.spotify}`);
+            console.log(`Album: ${body.album.name}`);
+        });
     } else {
         spotify.search({ type: 'track', query: "What's My Age Again" }, function (err, data) {
             let artists = '';
@@ -72,9 +72,10 @@ function bandsintown() {
 
     });
 }
-function movieThis(){
+function movieThis() {
     if (process.argv[3]) {
-        request(`http://www.omdbapi.com/?apikey=trilogy&t=${process.argv[3]}`, (error, response, body) => {
+        const movieName = process.argv.slice(3).join(' ');
+        request(`http://www.omdbapi.com/?apikey=trilogy&t=${movieName}`, (error, response, body) => {
             if (!error && response.statusCode === 200) {
                 let response = JSON.parse(body);
                 console.log(`\nMovie Title: ${response.Title}`);
