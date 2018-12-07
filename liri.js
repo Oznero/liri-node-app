@@ -6,8 +6,8 @@ let Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
 
 
-function getSpotifySong(secondParam) {
-    if (process.argv[3]) {
+function getSpotifySong(secondParam, songName) {
+    if (songName) {
         spotify.search({ type: 'track', query: process.argv[3] }, function (err, data) {
             let artists = '';
             if (err) {
@@ -105,7 +105,8 @@ function movieThis() {
 }
 
 if (process.argv[2] === 'spotify-this-song') {
-    getSpotifySong();
+    const songName = process.argv.slice(3).join(' ');
+    getSpotifySong(songName);
 }
 if (process.argv[2] === 'concert-this') {
     bandsintown();
